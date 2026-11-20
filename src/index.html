@@ -3,38 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b7a4b">
+<meta name="theme-color" content="#1a5fd0">
 <title>Life Pharmacy Vital Record (Walkin)</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f1f5f3;color:#1c2b25;min-height:100vh;display:flex;flex-direction:column}
-header{background:#0b7a4b;color:#fff;text-align:center;padding:14px 10px;font-size:18px;font-weight:bold}
-nav{display:flex;background:#fff;border-bottom:2px solid #d5e3dc}
-nav button{flex:1;padding:12px;border:0;background:none;font-size:15px;font-weight:bold;color:#55695f}
-nav button.on{color:#0b7a4b;border-bottom:3px solid #0b7a4b}
-main{flex:1;padding:12px;max-width:640px;width:100%;margin:0 auto}
-.card{background:#fff;border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px #0002}
-label{display:block;font-size:13px;font-weight:bold;margin:10px 0 4px}
-input,select,textarea{width:100%;padding:10px;border:1px solid #bcccc4;border-radius:8px;font-size:16px}
-.row{display:flex;gap:8px}.row>*{flex:1}
-button.b{padding:12px;border:0;border-radius:8px;background:#0b7a4b;color:#fff;font-size:16px;font-weight:bold;width:100%;margin-top:12px}
-button.s{background:#2d6cdf}button.g{background:#25a244}button.r{background:#c0392b}button.o{background:#6b7b73}
-.small{padding:8px 10px;font-size:14px;width:auto;margin:4px 4px 0 0}
-.v{border-bottom:1px solid #e3ece7;padding:10px 0;cursor:pointer}
-.tag{display:inline-block;padding:1px 7px;border-radius:10px;font-size:12px;color:#fff;background:#25a244}
-.tag.High,.tag.Low{background:#c0392b}.tag.Elevated{background:#e08a00}
+html,body{height:100%;margin:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#eef3fb;color:#14233f;display:flex;flex-direction:column;overflow:hidden}
+header,nav,footer,.vb,#upd{flex:none}
+header{background:linear-gradient(#2a6fe0,#0d3f94);color:#fff;text-align:center;padding:13px 10px;font-size:18px;font-weight:bold;box-shadow:0 3px 8px #0d3f9477;z-index:5}
+.vb{text-align:right;padding:4px 12px;font-size:12px;background:#dfe9fb}.vb a{color:#0d3f94;font-weight:bold;text-decoration:none}
+nav{display:flex;gap:6px;padding:8px;background:#dfe9fb}
+nav button{flex:1;padding:9px 2px;border:0;border-radius:10px;font-size:13px;font-weight:bold;color:#fff;background:linear-gradient(#7fa8e8,#4f7fd0);border-bottom:4px solid #2d5aa8;box-shadow:0 3px 6px #0d3f9455}
+nav button.on{background:linear-gradient(#2c5aa8,#143a78);border-bottom-color:#0a2655;transform:translateY(2px)}
+#main{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.w{max-width:640px;margin:0 auto;padding:12px}
+.sh{margin:0 0 10px;color:#0d3f94;font-size:20px;border-left:5px solid #1a5fd0;padding-left:8px}
+.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 3px 10px #0d3f9422}
+label{display:block;font-size:13px;font-weight:bold;margin:10px 0 4px;color:#0d3f94}
+input,select{width:100%;padding:11px;border:2px solid #b9cdf2;border-radius:10px;font-size:16px;background:#fff;color:#14233f}
+input:focus,select:focus{outline:0;border-color:#1a5fd0;box-shadow:0 0 0 3px #1a5fd033}
+.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}
+.b{display:block;width:100%;padding:13px;margin-top:12px;border:0;border-radius:12px;color:#fff;font-size:16px;font-weight:bold;background:linear-gradient(#4d8df5,#1a5fd0);border-bottom:5px solid #0d3f94;box-shadow:0 6px 10px #0d3f9460,inset 0 2px 0 #ffffff55;text-shadow:0 1px 2px #0d3f94aa}
+.b:active{transform:translateY(4px);border-bottom-width:1px;box-shadow:0 1px 3px #0d3f9460}
+.b.s{background:linear-gradient(#2c5aa8,#143a78);border-bottom-color:#0a2655}
+.b.o{background:linear-gradient(#7fa8e8,#4f7fd0);border-bottom-color:#2d5aa8}
+.b.r{background:linear-gradient(#e85b4d,#c0392b);border-bottom-color:#8e2318}
+.b.small{display:inline-block;width:auto;padding:8px 12px;font-size:14px;margin:8px 6px 0 0;border-bottom-width:4px}
+.v{border-bottom:1px solid #e1e9f7;padding:10px 0;cursor:pointer}
+.tag{display:inline-block;padding:1px 7px;border-radius:10px;font-size:12px;color:#fff;background:#1e9e5a}
+.tag.wn{background:#e08a00}.tag.bd{background:#d63a2f}.tag.cr{background:#8b0f0f}
 table{width:100%;border-collapse:collapse;font-size:13px}
-td,th{border:1px solid #d5e3dc;padding:5px;text-align:left}
-.hide{display:none}
-#toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:20px;opacity:0;transition:.3s;pointer-events:none;max-width:90%;text-align:center}
+td,th{border:1px solid #d3e0f7;padding:5px;text-align:left}th{background:#e8f0fe;color:#0d3f94}
+.hide{display:none!important}
+#toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:#0d3f94;color:#fff;padding:10px 16px;border-radius:20px;opacity:0;transition:.3s;pointer-events:none;max-width:90%;text-align:center;z-index:120}
 #toast.on{opacity:1}
-footer{background:#fff;border-top:2px solid #d5e3dc;text-align:center;font-size:12px;padding:10px;color:#55695f}
-footer a{color:#0b7a4b;font-weight:bold;text-decoration:none}
+footer{display:flex;align-items:center;justify-content:center;gap:12px;text-align:left;background:#fff;border-top:3px solid #1a5fd0;font-size:11.5px;padding:7px 10px;color:#3b4f78}
+footer img{width:46px;height:46px;border-radius:8px;flex:none}
+footer a{color:#1a5fd0;font-weight:bold;text-decoration:none}
+.ubar{background:#fff3cd;padding:10px 14px;font-size:14px;border-bottom:2px solid #e0a800}
+.ovl{position:fixed;top:0;left:0;right:0;bottom:0;background:#fffffff5;z-index:99;padding:50px 22px;text-align:center;font-size:16px}
+.mdl{position:fixed;top:0;left:0;right:0;bottom:0;background:#0a1e4acc;z-index:90;display:flex;align-items:center;justify-content:center;padding:12px}
+.mc{background:#fff;border-radius:16px;padding:16px;max-width:560px;width:100%;max-height:90%;overflow-y:auto}
+.adv p{margin:6px 0;font-size:14px;line-height:1.4}.ref,.gd small{font-size:11px;color:#55698f}
+.gd h4{margin:14px 0 6px;color:#0d3f94}.gd p{font-size:13px;margin:6px 0}
+.desk .w{max-width:900px}.desk .card{padding:22px}.desk .row{gap:18px}.desk nav{justify-content:center}.desk nav button{max-width:240px}
 .pr{display:none}
-.vb{text-align:right;padding:5px 12px;font-size:13px;background:#e6efe9}.vb a{color:#0b7a4b;font-weight:bold;text-decoration:none}
-.desk main{max-width:900px}.desk .card{padding:22px}.desk .row{gap:18px}.desk nav{justify-content:center}.desk nav button{max-width:240px}
-footer{display:flex;align-items:center;justify-content:center;gap:12px;text-align:left}.ubar{background:#fff3cd;padding:10px 14px;font-size:14px;border-bottom:2px solid #e0a800}.ovl{position:fixed;top:0;left:0;right:0;bottom:0;background:#fffffff5;z-index:99;padding:50px 22px;text-align:center;font-size:16px}footer img{width:56px;height:56px;border-radius:8px;flex:none}
-@media print{header,nav,footer,main>section,#toast{display:none!important}.pr{display:block!important}body{background:#fff}}
+@media print{html,body{height:auto;overflow:visible;display:block}#main{overflow:visible}header,nav,footer,.vb,.w,#upd,.mdl,#toast{display:none!important}.pr{display:block!important}}
 </style>
 </head>
 <body>
@@ -42,19 +56,24 @@ footer{display:flex;align-items:center;justify-content:center;gap:12px;text-alig
 <header>Life Pharmacy Vital Record (Walkin)</header>
 <div class="vb"><a href="#" id="vt" onclick="toggleView();return false">Switch to Desktop view</a></div>
 <nav>
-<button id="t1" class="on" onclick="tab(1)">New Record</button>
+<button id="t1" class="on" onclick="tab(1)">BP Check</button>
 <button id="t2" onclick="tab(2)">Reports</button>
-<button id="t3" onclick="tab(3)">Settings</button>
+<button id="t3" onclick="tab(3)">Guide</button>
+<button id="t4" onclick="tab(4)">Settings</button>
 </nav>
-<main>
+<main id="main">
+<div class="w">
+
 <section id="p1">
+<h2 class="sh">BP Check</h2>
 <div class="card">
 <div class="row">
 <div><label>Date</label><input type="date" id="d"></div>
 <div><label>Time</label><input type="time" id="tm"></div>
 </div>
 <label>Visitor Name *</label><input id="nm" placeholder="Full name" autocomplete="off">
-<label>Mobile No (WhatsApp) *</label><input id="mb" type="tel" placeholder="05XXXXXXXX or 9715XXXXXXXX">
+<label>Mobile No (WhatsApp) *</label><input id="mb" type="tel" placeholder="05XXXXXXXX (other country: +code)">
+<label>Age in years * (0 = under 1 year)</label><input id="ag" type="number" inputmode="numeric" placeholder="e.g. 45">
 <div class="row">
 <div><label>BP Systolic</label><input id="sy" type="number" inputmode="numeric" placeholder="120"></div>
 <div><label>BP Diastolic</label><input id="di" type="number" inputmode="numeric" placeholder="80"></div>
@@ -66,13 +85,13 @@ footer{display:flex;align-items:center;justify-content:center;gap:12px;text-alig
 <label>Sugar Type</label>
 <select id="st"><option>Random</option><option>Fasting</option><option>After meal</option></select>
 <label>Note (optional)</label><input id="nt" placeholder="e.g. on medication">
-<label style="font-weight:normal"><input type="checkbox" id="wa" checked style="width:auto"> Send report to visitor's WhatsApp after saving</label>
-<button class="b" onclick="save()">Save Record</button>
+<button class="b" onclick="save()">Save &amp; Show Advice</button>
 </div>
 </section>
 
 <section id="p2" class="hide">
-<div class="card">
+<h2 class="sh">Visitor Reports</h2>
+<div class="card" id="lc">
 <input id="q" placeholder="Search name or mobile" oninput="list()">
 <div class="row"><div><label>From</label><input type="date" id="f1" onchange="list()"></div><div><label>To</label><input type="date" id="f2" onchange="list()"></div></div>
 <div id="vl"></div>
@@ -81,27 +100,58 @@ footer{display:flex;align-items:center;justify-content:center;gap:12px;text-alig
 </section>
 
 <section id="p3" class="hide">
+<h2 class="sh">Health Guide</h2>
+<div class="card gd">
+<p><b>Screening information only, not a diagnosis.</b> One reading is not enough: confirm with a doctor or laboratory. Values checked on 20/11/2026.</p>
+<h4>Blood pressure (age 13 and above), mmHg</h4>
+<table><tr><th>Category</th><th>Systolic</th><th>Diastolic</th></tr>
+<tr><td>Normal</td><td>below 120</td><td>and below 80</td></tr>
+<tr><td>Elevated</td><td>120-129</td><td>and below 80</td></tr>
+<tr><td>Stage 1</td><td>130-139</td><td>or 80-89</td></tr>
+<tr><td>Stage 2</td><td>140 or more</td><td>or 90 or more</td></tr>
+<tr><td>Crisis</td><td>180 or more</td><td>and/or 120 or more</td></tr></table>
+<p>Under 13 years: child BP is judged by age, sex and height percentiles, so adult ranges do not apply. Refer to a paediatrician. [1][2][6]</p>
+<h4>Resting heartbeat by age, bpm</h4>
+<table><tr><th>Age</th><th>Normal range</th></tr>
+<tr><td>Under 1 year</td><td>100-180</td></tr><tr><td>1-2 years</td><td>98-140</td></tr><tr><td>3-4 years</td><td>80-120</td></tr>
+<tr><td>5-12 years</td><td>75-118</td></tr><tr><td>13 years and above</td><td>60-100</td></tr></table>
+<p>Trained athletes can be lower (about 40-60) without a problem. [5]</p>
+<h4>Blood sugar, mg/dL (adults)</h4>
+<table><tr><th>Test</th><th>Normal</th><th>Prediabetes range</th><th>Diabetes range</th></tr>
+<tr><td>Fasting (8 h)</td><td>below 100</td><td>100-125</td><td>126 or more</td></tr>
+<tr><td>2 h after meal</td><td>below 140</td><td>140-199</td><td>200 or more</td></tr></table>
+<p>Random 200 or more with symptoms (thirst, frequent urination) points to diabetes. Diagnosis needs a lab test, repeated on another day. Low sugar: below 70 treat now, below 54 serious. For people already diagnosed, usual adult targets are 80-130 before meals and below 180 after meals; the doctor sets individual targets. [3][4]</p>
+<h4>References</h4>
+<p>[1] AHA/ACC 2025 High Blood Pressure Guideline (Circulation 2025;152:e114-e218). <a href="#" onclick="openExt('https://professional.heart.org/en/science-news/2025-high-blood-pressure-guideline');return false">professional.heart.org</a><br>
+[2] AAP 2017 Guideline, High BP in Children and Adolescents (Pediatrics 2017;140(3):e20171904). <a href="#" onclick="openExt('https://www.aafp.org/pubs/afp/issues/2018/1015/p486.html');return false">AAFP summary</a><br>
+[3] ADA Standards of Care in Diabetes 2026, Section 2 (doi 10.2337/dc26-S002). <a href="#" onclick="openExt('https://doi.org/10.2337/dc26-S002');return false">doi.org</a><br>
+[4] CDC: Treatment of low blood sugar. <a href="#" onclick="openExt('https://www.cdc.gov/diabetes/treatment/treatment-low-blood-sugar-hypoglycemia.html');return false">cdc.gov</a><br>
+[5] Cleveland Clinic: Heart rate by age. <a href="#" onclick="openExt('https://my.clevelandclinic.org/services/heart/heart-blood-vessels/how-does-heart-beat');return false">clevelandclinic.org</a><br>
+[6] AHA advice on hypertensive crisis (180/120: wait 5 minutes, re-check), as reported by HealthDay. <a href="#" onclick="openExt('https://www.healthday.com/health-news/cardiovascular-diseases/blood-pressure-2661556110.html');return false">healthday.com</a></p>
+</div>
+</section>
+
+<section id="p4" class="hide">
+<h2 class="sh">Settings</h2>
 <div class="card">
-<div id="urlbox"><label>Google Sheet Web App URL</label>
-<input id="url" placeholder="https://script.google.com/macros/s/.../exec">
-<button class="b" onclick="saveUrl()">Save URL</button></div>
-<button class="b s" onclick="syncAll()">Sync Pending to Google Sheet</button>
-<button class="b o" onclick="restore()">Restore from Google Sheet</button>
-<button class="b g" onclick="csv()">Download All (CSV)</button>
-<button class="b s" onclick="chkUpd(true)">Check for Updates</button>
+<button class="b" onclick="syncAll()">Sync Pending to Google Sheet</button>
+<button class="b s" onclick="restore()">Restore from Google Sheet</button>
+<button class="b o" onclick="csv()">Download All (CSV)</button>
+<button class="b" onclick="chkUpd(true)">Check for Updates</button>
 <p id="info" style="font-size:13px"></p>
 </div>
 </section>
 
+</div>
 <div id="pr" class="pr"></div>
 </main>
+<div id="res" class="mdl hide"><div class="mc" id="rc"></div></div>
 <div id="toast"></div>
 <footer>
 <img src="logo.png" alt="Haseeb Mirza">
 <div>Developed by <b>Haseeb Mirza</b> <a href="tel:+971507256801">+971507256801</a><br>
 &copy; All rights reserved. No part of this app may be republished or copied.</div>
 </footer>
-
 <script src="app.js"></script>
 </body>
 </html>

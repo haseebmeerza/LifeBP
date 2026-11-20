@@ -1,12 +1,13 @@
 // Life-BP backend (Developer: Haseeb Mirza)
 var TOKEN='CHANGE_THIS_SECRET'; // must be the same as "token" in app.config.json
-var HEAD=['ID','Date','Time','Name','Mobile','BP Systolic','BP Diastolic','Heartbeat','Sugar','Sugar Type','Note'];
-var KEYS=['id','date','time','name','mobile','sys','dia','hr','sugar','stype','note'];
+var HEAD=['ID','Date','Time','Name','Mobile','BP Systolic','BP Diastolic','Heartbeat','Sugar','Sugar Type','Note','Age'];
+var KEYS=['id','date','time','name','mobile','sys','dia','hr','sugar','stype','note','age'];
 function sh_(){
   var ss=SpreadsheetApp.getActiveSpreadsheet(), s=ss.getSheetByName('Records');
   if(!s){s=ss.insertSheet('Records');s.appendRow(HEAD);s.setFrozenRows(1);
-    s.getRange(1,1,1,HEAD.length).setFontWeight('bold').setBackground('#0b7a4b').setFontColor('#ffffff');
+    s.getRange(1,1,1,HEAD.length).setFontWeight('bold').setBackground('#1a5fd0').setFontColor('#ffffff');
     s.getRange(2,1,5000,HEAD.length).setNumberFormat('@');}
+  if(s.getRange(1,HEAD.length).getValue()!=='Age') s.getRange(1,HEAD.length).setValue('Age').setFontWeight('bold').setBackground('#1a5fd0').setFontColor('#ffffff');
   return s;
 }
 function ok_(t){return String(t)===TOKEN;}

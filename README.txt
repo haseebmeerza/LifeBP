@@ -5,6 +5,13 @@ This is a real Android app (Capacitor). The app code is inside the APK, protecte
 The APK is built automatically by GitHub in the cloud: nothing to install on your PC.
 You hand over ONLY the signed APK to the client.
 
+VERSION 1.1.0 - WHAT IS NEW
+  Age field with age-wise BP / heartbeat / sugar status and advice (AHA/ACC 2025, AAP 2017, ADA 2026,
+  Cleveland Clinic), Health Guide tab with sources, blue theme with 3D buttons, frozen header and footer,
+  Sheet link field removed from Settings. A new "Age" column is added to the Records tab.
+  IF YOU ALREADY DID STEP 1: open Apps Script, paste the NEW google-sheet/Code.gs again (keep your secret
+  word on line 2), then Deploy > Manage deployments > pencil > New version > Deploy (same URL).
+
 WHAT IS IN THIS FOLDER
   src/                 the app (index.html, app.js, logo.png)
   android-res/         app icon (Life / BP, blue)
