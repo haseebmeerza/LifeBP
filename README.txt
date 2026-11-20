@@ -1,57 +1,69 @@
-LIFE-BP  |  Life Pharmacy Vital Record (Walkin)
+LIFE-BP  |  Life Pharmacy Vital Record (Walkin)  -  ANDROID APK PROJECT
 Developer: Haseeb Mirza +971507256801   All rights reserved.
 
-FILES IN THIS FOLDER
-  index.html     the whole app (mobile first, Desktop view button at top)
-  manifest.json  app name "Life-BP" and icons (for install / APK)
-  sw.js          offline support
-  icon-192.png, icon-512.png   app icons (Life / BP, blue)
-  logo.png       your logo shown in the footer
-  Code.gs        Google Sheet backend (paste into Apps Script, NOT for GitHub)
-  README.txt     these instructions
+This is a real Android app (Capacitor). The app code is inside the APK, protected (obfuscated).
+The APK is built automatically by GitHub in the cloud: nothing to install on your PC.
+You hand over ONLY the signed APK to the client.
 
-STEP 1 - GOOGLE SHEET (stores every record online)
-  1. Open sheets.google.com and create a blank sheet. Name it "Life Pharmacy Vital Record".
-  2. Menu: Extensions > Apps Script. Delete everything in the editor.
-  3. Open Code.gs from this folder, copy all, paste into the editor, click Save.
-  4. Click Deploy > New deployment. Gear icon > choose "Web app".
-  5. Execute as: Me.  Who has access: Anyone.  Click Deploy.
-  6. Click Authorize access, choose your Google account, Advanced > Go to project > Allow.
-  7. Copy the "Web app URL" (it ends with /exec). Keep it private.
-  The "Records" tab with headers is created automatically when the first record is saved.
-  If you ever edit Code.gs: Deploy > Manage deployments > pencil icon > Version: New version > Deploy.
+WHAT IS IN THIS FOLDER
+  src/                 the app (index.html, app.js, logo.png)
+  android-res/         app icon (Life / BP, blue)
+  app.config.json      YOUR settings: sheet link, secret token, app version
+  google-sheet/Code.gs backend for Google Sheet (paste into Apps Script; keep private)
+  .github/workflows/   the two build robots (build-apk.yml, create-keystore.yml)
+  build.js, patch-android.js, package.json, capacitor.config.json   build files (do not edit)
 
-STEP 2 - GITHUB (hosting)
-  1. Sign in at github.com, click New repository, name it e.g. life-bp, set Public, Create.
-  2. Click "uploading an existing file". Upload ONLY these 6 files:
-     index.html, manifest.json, sw.js, icon-192.png, icon-512.png, logo.png
-     Do not upload Code.gs or README.txt. Click Commit changes.
-  3. Settings > Pages > Source: "Deploy from a branch" > Branch: main, folder /(root) > Save.
-  4. Wait 1-2 minutes. Your app link will be https://YOURNAME.github.io/life-bp/
+STEP 1 - GOOGLE SHEET
+  1. Create a blank Google Sheet "Life Pharmacy Vital Record". Extensions > Apps Script.
+  2. Delete everything, paste all of google-sheet/Code.gs.
+  3. In line 2 change CHANGE_THIS_SECRET to your own secret word (letters/numbers, no spaces). Remember it.
+  4. Save. Deploy > New deployment > gear > Web app. Execute as: Me. Who has access: Anyone. Deploy.
+  5. Authorize (Advanced > Go to project > Allow). Copy the Web app URL (ends with /exec).
 
-STEP 3 - CONNECT THE APP TO THE SHEET
-  1. Open the link on the phone. Tap Settings.
-  2. Paste the Web app URL from Step 1 and tap Save URL.
-  3. Add a test record. Check the "Records" tab in the Google Sheet. The row should appear.
-  4. Delete the test row in the sheet afterwards.
+STEP 2 - GITHUB (use a PRIVATE repository so nobody can see your code)
+  1. github.com > New repository > name life-bp-app > select PRIVATE > Create.
+  2. Upload every file and folder from this project (drag & drop all, including the hidden
+     folder .github). If .github does not upload: Add file > Create new file, type
+     .github/workflows/build-apk.yml and paste that file's text; repeat for create-keystore.yml.
+  3. Open app.config.json in GitHub (pencil icon). Set "sheetUrl" to the URL from Step 1 and "token"
+     to the same secret word as in Code.gs. Commit.
 
-STEP 4 - INSTALL ON MOBILE
-  Option A (no APK): open the link in Chrome, menu (3 dots) > Add to Home screen / Install app.
-  Option B (APK file):
-    1. Go to pwabuilder.com, paste your GitHub Pages link, click Start.
-    2. Click Package for stores > Android > Generate / Download.
-    3. Unzip the download and copy the .apk to the phones. Open it and install.
-       (Allow "Install unknown apps" if the phone asks.)
-  If an old version is installed, uninstall it first.
+STEP 3 - SIGNING KEY (one time only)
+  1. Repo > Actions > "Create Keystore (run once)" > Run workflow. Wait until green.
+  2. Open that run > Artifacts > download "keystore" (zip). SAVE IT SAFELY (Drive + USB). If this
+     key is lost, installed apps can never be updated.
+  3. Repo > Settings > Secrets and variables > Actions > New repository secret:
+       KEYSTORE_B64      = the whole text inside keystore_b64.txt
+       KEYSTORE_PASSWORD = the text inside keystore_password.txt
+  4. Delete the artifact from the run after saving it.
+
+STEP 4 - BUILD THE APK
+  Repo > Actions > "Build APK" > Run workflow. After about 5-10 minutes open the run > Artifacts >
+  download "Life-BP-APK". Unzip: Life-BP-v1.0.0.apk is the file for the client.
+  Install: copy to phone, open it, allow "Install unknown apps" for that file manager/browser.
+
+STEP 5 - SEND AN UPDATE LATER (shows inside the app)
+  1. In app.config.json raise versionCode (1 > 2) and change versionName (1.0.1). Commit.
+  2. Run "Build APK" again and download the new APK.
+  3. Upload the APK to Google Drive > Share > Anyone with the link. Take the file id from the link
+     (…/d/FILEID/view) and make the direct link:  https://drive.google.com/uc?export=download&id=FILEID
+  4. Open your Google Sheet, tab "Update" (it appears after the app has opened once with internet):
+       B1 versionCode = 2   B2 versionName = 1.0.1   B3 apkUrl = the direct link
+       B4 notes = what is new   B5 force = FALSE (or TRUE to make the update compulsory)
+  5. Every installed app shows an "Update available" bar at next start, with Update Now.
+     Tapping it downloads the APK; the user taps it to install over the old one. Records are kept.
+  Always raise versionCode, and always build with the same signing key.
 
 DAILY USE
-  New Record: enter name, mobile, readings > Save. WhatsApp opens with the report ready; tap Send.
-  Reports: search or filter by date, tap a visitor to see all readings, WhatsApp, Print/PDF, delete.
-  Settings: Sync Pending (after offline use), Restore from Google Sheet, Download CSV.
-  Desktop view: tap "Switch to Desktop view" at the top for a wider layout on a PC. The choice is remembered.
+  New Record > Save. WhatsApp opens with the report ready; press Send once (WhatsApp does not allow
+  silent sending). Reports: search/filter, tap a visitor for readings, WhatsApp, Share, delete.
+  Settings: Sync Pending, Restore from Google Sheet, Download CSV (share), Check for Updates.
+  Top link switches Mobile / Desktop layout.
 
-IMPORTANT NOTES
-  - WhatsApp cannot send silently from an app: it opens the message and you press Send once.
-  - Records are saved on the phone first. If there is no internet they sync later with Sync Pending.
-  - Each phone keeps its own records; the Google Sheet holds all of them together.
-  - Readings are screening only, not a diagnosis. Keep the Sheet URL and app link for staff only.
+CODE PROTECTION (honest summary)
+  Done: private repo, code obfuscated, debugging and backup disabled, APK signed, sheet access needs
+  your secret token, remote force-update. No APK can be made 100% copy-proof, but this stops casual
+  copying and re-publishing. The footer and licence text show ownership.
+
+IF THE BUILD FAILS
+  Actions > the red run > open the red step > copy the last red error lines and send them to Claude.
