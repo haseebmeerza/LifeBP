@@ -3,59 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b7a4b">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png">
+<meta name="theme-color" content="#1a5fd0">
 <title>Life Pharmacy Vital Record (Walkin)</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f1f5f3;color:#1c2b25;min-height:100vh;display:flex;flex-direction:column}
-header{background:#0b7a4b;color:#fff;text-align:center;padding:14px 10px;font-size:18px;font-weight:bold}
-nav{display:flex;background:#fff;border-bottom:2px solid #d5e3dc}
-nav button{flex:1;padding:12px;border:0;background:none;font-size:15px;font-weight:bold;color:#55695f}
-nav button.on{color:#0b7a4b;border-bottom:3px solid #0b7a4b}
-main{flex:1;padding:12px;max-width:640px;width:100%;margin:0 auto}
-.card{background:#fff;border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px #0002}
-label{display:block;font-size:13px;font-weight:bold;margin:10px 0 4px}
-input,select,textarea{width:100%;padding:10px;border:1px solid #bcccc4;border-radius:8px;font-size:16px}
-.row{display:flex;gap:8px}.row>*{flex:1}
-button.b{padding:12px;border:0;border-radius:8px;background:#0b7a4b;color:#fff;font-size:16px;font-weight:bold;width:100%;margin-top:12px}
-button.s{background:#2d6cdf}button.g{background:#25a244}button.r{background:#c0392b}button.o{background:#6b7b73}
-.small{padding:8px 10px;font-size:14px;width:auto;margin:4px 4px 0 0}
-.v{border-bottom:1px solid #e3ece7;padding:10px 0;cursor:pointer}
-.tag{display:inline-block;padding:1px 7px;border-radius:10px;font-size:12px;color:#fff;background:#25a244}
-.tag.High,.tag.Low{background:#c0392b}.tag.Elevated{background:#e08a00}
+html,body{height:100%;margin:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#eef3fb;color:#14233f;display:flex;flex-direction:column;overflow:hidden}
+header,nav,footer,.vb,#upd{flex:none}
+header{background:linear-gradient(#2a6fe0,#0d3f94);color:#fff;text-align:center;padding:13px 10px;font-size:18px;font-weight:bold;box-shadow:0 3px 8px #0d3f9477;z-index:5}
+.vb{text-align:right;padding:4px 12px;font-size:12px;background:#dfe9fb}.vb a{color:#0d3f94;font-weight:bold;text-decoration:none}
+nav{display:flex;gap:6px;padding:8px;background:#dfe9fb}
+nav button{flex:1;padding:9px 2px;border:0;border-radius:10px;font-size:13px;font-weight:bold;color:#fff;background:linear-gradient(#7fa8e8,#4f7fd0);border-bottom:4px solid #2d5aa8;box-shadow:0 3px 6px #0d3f9455}
+nav button.on{background:linear-gradient(#2c5aa8,#143a78);border-bottom-color:#0a2655;transform:translateY(2px)}
+#main{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.w{max-width:640px;margin:0 auto;padding:12px}
+.sh{margin:0 0 10px;color:#0d3f94;font-size:20px;border-left:5px solid #1a5fd0;padding-left:8px}
+.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 3px 10px #0d3f9422}
+label{display:block;font-size:13px;font-weight:bold;margin:10px 0 4px;color:#0d3f94}
+input,select{width:100%;padding:11px;border:2px solid #b9cdf2;border-radius:10px;font-size:16px;background:#fff;color:#14233f}
+input:focus,select:focus{outline:0;border-color:#1a5fd0;box-shadow:0 0 0 3px #1a5fd033}
+.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}
+.b{display:block;width:100%;padding:13px;margin-top:12px;border:0;border-radius:12px;color:#fff;font-size:16px;font-weight:bold;background:linear-gradient(#4d8df5,#1a5fd0);border-bottom:5px solid #0d3f94;box-shadow:0 6px 10px #0d3f9460,inset 0 2px 0 #ffffff55;text-shadow:0 1px 2px #0d3f94aa}
+.b:active{transform:translateY(4px);border-bottom-width:1px;box-shadow:0 1px 3px #0d3f9460}
+.b.s{background:linear-gradient(#2c5aa8,#143a78);border-bottom-color:#0a2655}
+.b.o{background:linear-gradient(#7fa8e8,#4f7fd0);border-bottom-color:#2d5aa8}
+.b.r{background:linear-gradient(#e85b4d,#c0392b);border-bottom-color:#8e2318}
+.b.small{display:inline-block;width:auto;padding:8px 12px;font-size:14px;margin:8px 6px 0 0;border-bottom-width:4px}
+.v{border-bottom:1px solid #e1e9f7;padding:10px 0;cursor:pointer}
+.tag{display:inline-block;padding:1px 7px;border-radius:10px;font-size:12px;color:#fff;background:#1e9e5a}
+.tag.wn{background:#e08a00}.tag.bd{background:#d63a2f}.tag.cr{background:#8b0f0f}
 table{width:100%;border-collapse:collapse;font-size:13px}
-td,th{border:1px solid #d5e3dc;padding:5px;text-align:left}
-.hide{display:none}
-#toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:20px;opacity:0;transition:.3s;pointer-events:none;max-width:90%;text-align:center}
+td,th{border:1px solid #d3e0f7;padding:5px;text-align:left}th{background:#e8f0fe;color:#0d3f94}
+.hide{display:none!important}
+#toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:#0d3f94;color:#fff;padding:10px 16px;border-radius:20px;opacity:0;transition:.3s;pointer-events:none;max-width:90%;text-align:center;z-index:120}
 #toast.on{opacity:1}
-footer{background:#fff;border-top:2px solid #d5e3dc;text-align:center;font-size:12px;padding:10px;color:#55695f}
-footer a{color:#0b7a4b;font-weight:bold;text-decoration:none}
+footer{display:flex;align-items:center;justify-content:center;gap:12px;text-align:left;background:#fff;border-top:3px solid #1a5fd0;font-size:11.5px;padding:7px 10px;color:#3b4f78}
+footer img{width:46px;height:46px;border-radius:8px;flex:none}
+footer a{color:#1a5fd0;font-weight:bold;text-decoration:none}
+.ubar{background:#fff3cd;padding:10px 14px;font-size:14px;border-bottom:2px solid #e0a800}
+.ovl{position:fixed;top:0;left:0;right:0;bottom:0;background:#fffffff5;z-index:99;padding:50px 22px;text-align:center;font-size:16px}
+.mdl{position:fixed;top:0;left:0;right:0;bottom:0;background:#0a1e4acc;z-index:90;display:flex;align-items:center;justify-content:center;padding:12px}
+.mc{background:#fff;border-radius:16px;padding:16px;max-width:560px;width:100%;max-height:90%;overflow-y:auto}
+.adv p{margin:6px 0;font-size:14px;line-height:1.4}.ref,.gd small{font-size:11px;color:#55698f}
+.gd h4{margin:14px 0 6px;color:#0d3f94}.gd p{font-size:13px;margin:6px 0}
+.desk .w{max-width:900px}.desk .card{padding:22px}.desk .row{gap:18px}.desk nav{justify-content:center}.desk nav button{max-width:240px}
 .pr{display:none}
-.vb{text-align:right;padding:5px 12px;font-size:13px;background:#e6efe9}.vb a{color:#0b7a4b;font-weight:bold;text-decoration:none}
-.desk main{max-width:900px}.desk .card{padding:22px}.desk .row{gap:18px}.desk nav{justify-content:center}.desk nav button{max-width:240px}
-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:right}footer img{width:56px;height:56px;border-radius:8px;flex:none}
-@media print{header,nav,footer,main>section,#toast{display:none!important}.pr{display:block!important}body{background:#fff}}
+@media print{html,body{height:auto;overflow:visible;display:block}#main{overflow:visible}header,nav,footer,.vb,.w,#upd,.mdl,#toast{display:none!important}.pr{display:block!important}}
 </style>
 </head>
 <body>
+<div id="upd" class="hide"></div>
 <header>Life Pharmacy Vital Record (Walkin)</header>
 <div class="vb"><a href="#" id="vt" onclick="toggleView();return false">Switch to Desktop view</a></div>
 <nav>
-<button id="t1" class="on" onclick="tab(1)">New Record</button>
+<button id="t1" class="on" onclick="tab(1)">BP Check</button>
 <button id="t2" onclick="tab(2)">Reports</button>
-<button id="t3" onclick="tab(3)">Settings</button>
+<button id="t3" onclick="tab(3)">Guide</button>
+<button id="t4" onclick="tab(4)">Settings</button>
 </nav>
-<main>
+<main id="main">
+<div class="w">
+
 <section id="p1">
+<h2 class="sh">BP Check</h2>
 <div class="card">
 <div class="row">
 <div><label>Date</label><input type="date" id="d"></div>
 <div><label>Time</label><input type="time" id="tm"></div>
 </div>
 <label>Visitor Name *</label><input id="nm" placeholder="Full name" autocomplete="off">
-<label>Mobile No (WhatsApp) *</label><input id="mb" type="tel" placeholder="05XXXXXXXX or 9715XXXXXXXX">
+<label>Mobile No (WhatsApp) *</label><input id="mb" type="tel" placeholder="05XXXXXXXX (other country: +code)">
+<label>Age in years * (0 = under 1 year)</label><input id="ag" type="number" inputmode="numeric" placeholder="e.g. 45">
 <div class="row">
 <div><label>BP Systolic</label><input id="sy" type="number" inputmode="numeric" placeholder="120"></div>
 <div><label>BP Diastolic</label><input id="di" type="number" inputmode="numeric" placeholder="80"></div>
@@ -67,13 +85,13 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:12px;te
 <label>Sugar Type</label>
 <select id="st"><option>Random</option><option>Fasting</option><option>After meal</option></select>
 <label>Note (optional)</label><input id="nt" placeholder="e.g. on medication">
-<label style="font-weight:normal"><input type="checkbox" id="wa" checked style="width:auto"> Send report to visitor's WhatsApp after saving</label>
-<button class="b" onclick="save()">Save Record</button>
+<button class="b" onclick="save()">Save &amp; Show Advice</button>
 </div>
 </section>
 
 <section id="p2" class="hide">
-<div class="card">
+<h2 class="sh">Visitor Reports</h2>
+<div class="card" id="lc">
 <input id="q" placeholder="Search name or mobile" oninput="list()">
 <div class="row"><div><label>From</label><input type="date" id="f1" onchange="list()"></div><div><label>To</label><input type="date" id="f2" onchange="list()"></div></div>
 <div id="vl"></div>
@@ -82,142 +100,58 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:12px;te
 </section>
 
 <section id="p3" class="hide">
+<h2 class="sh">Health Guide</h2>
+<div class="card gd">
+<p><b>Screening information only, not a diagnosis.</b> One reading is not enough: confirm with a doctor or laboratory. Values checked on 20/11/2026.</p>
+<h4>Blood pressure (age 13 and above), mmHg</h4>
+<table><tr><th>Category</th><th>Systolic</th><th>Diastolic</th></tr>
+<tr><td>Normal</td><td>below 120</td><td>and below 80</td></tr>
+<tr><td>Elevated</td><td>120-129</td><td>and below 80</td></tr>
+<tr><td>Stage 1</td><td>130-139</td><td>or 80-89</td></tr>
+<tr><td>Stage 2</td><td>140 or more</td><td>or 90 or more</td></tr>
+<tr><td>Crisis</td><td>180 or more</td><td>and/or 120 or more</td></tr></table>
+<p>Under 13 years: child BP is judged by age, sex and height percentiles, so adult ranges do not apply. Refer to a paediatrician. [1][2][6]</p>
+<h4>Resting heartbeat by age, bpm</h4>
+<table><tr><th>Age</th><th>Normal range</th></tr>
+<tr><td>Under 1 year</td><td>100-180</td></tr><tr><td>1-2 years</td><td>98-140</td></tr><tr><td>3-4 years</td><td>80-120</td></tr>
+<tr><td>5-12 years</td><td>75-118</td></tr><tr><td>13 years and above</td><td>60-100</td></tr></table>
+<p>Trained athletes can be lower (about 40-60) without a problem. [5]</p>
+<h4>Blood sugar, mg/dL (adults)</h4>
+<table><tr><th>Test</th><th>Normal</th><th>Prediabetes range</th><th>Diabetes range</th></tr>
+<tr><td>Fasting (8 h)</td><td>below 100</td><td>100-125</td><td>126 or more</td></tr>
+<tr><td>2 h after meal</td><td>below 140</td><td>140-199</td><td>200 or more</td></tr></table>
+<p>Random 200 or more with symptoms (thirst, frequent urination) points to diabetes. Diagnosis needs a lab test, repeated on another day. Low sugar: below 70 treat now, below 54 serious. For people already diagnosed, usual adult targets are 80-130 before meals and below 180 after meals; the doctor sets individual targets. [3][4]</p>
+<h4>References</h4>
+<p>[1] AHA/ACC 2025 High Blood Pressure Guideline (Circulation 2025;152:e114-e218). <a href="#" onclick="openExt('https://professional.heart.org/en/science-news/2025-high-blood-pressure-guideline');return false">professional.heart.org</a><br>
+[2] AAP 2017 Guideline, High BP in Children and Adolescents (Pediatrics 2017;140(3):e20171904). <a href="#" onclick="openExt('https://www.aafp.org/pubs/afp/issues/2018/1015/p486.html');return false">AAFP summary</a><br>
+[3] ADA Standards of Care in Diabetes 2026, Section 2 (doi 10.2337/dc26-S002). <a href="#" onclick="openExt('https://doi.org/10.2337/dc26-S002');return false">doi.org</a><br>
+[4] CDC: Treatment of low blood sugar. <a href="#" onclick="openExt('https://www.cdc.gov/diabetes/treatment/treatment-low-blood-sugar-hypoglycemia.html');return false">cdc.gov</a><br>
+[5] Cleveland Clinic: Heart rate by age. <a href="#" onclick="openExt('https://my.clevelandclinic.org/services/heart/heart-blood-vessels/how-does-heart-beat');return false">clevelandclinic.org</a><br>
+[6] AHA advice on hypertensive crisis (180/120: wait 5 minutes, re-check), as reported by HealthDay. <a href="#" onclick="openExt('https://www.healthday.com/health-news/cardiovascular-diseases/blood-pressure-2661556110.html');return false">healthday.com</a></p>
+</div>
+</section>
+
+<section id="p4" class="hide">
+<h2 class="sh">Settings</h2>
 <div class="card">
-<label>Google Sheet Web App URL</label>
-<input id="url" placeholder="https://script.google.com/macros/s/.../exec">
-<button class="b" onclick="saveUrl()">Save URL</button>
-<button class="b s" onclick="syncAll()">Sync Pending to Google Sheet</button>
-<button class="b o" onclick="restore()">Restore from Google Sheet</button>
-<button class="b g" onclick="csv()">Download All (CSV)</button>
+<button class="b" onclick="syncAll()">Sync Pending to Google Sheet</button>
+<button class="b s" onclick="restore()">Restore from Google Sheet</button>
+<button class="b o" onclick="csv()">Download All (CSV)</button>
+<button class="b" onclick="chkUpd(true)">Check for Updates</button>
 <p id="info" style="font-size:13px"></p>
 </div>
 </section>
 
+</div>
 <div id="pr" class="pr"></div>
 </main>
+<div id="res" class="mdl hide"><div class="mc" id="rc"></div></div>
 <div id="toast"></div>
 <footer>
 <img src="logo.png" alt="Haseeb Mirza">
 <div>Developed by <b>Haseeb Mirza</b> <a href="tel:+971507256801">+971507256801</a><br>
 &copy; All rights reserved. No part of this app may be republished or copied.</div>
 </footer>
-
-<script>
-var K='lpvr_records',U='lpvr_url',CC='971';
-var recs=load();
-function load(){try{return JSON.parse(localStorage.getItem(K)||'[]')}catch(e){return[]}}
-function store(){try{localStorage.setItem(K,JSON.stringify(recs))}catch(e){toast('Storage full or blocked')}}
-function $(i){return document.getElementById(i)}
-function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-function toast(m){var t=$('toast');t.textContent=m;t.className='on';setTimeout(function(){t.className=''},2500)}
-function p2(n){return(n<10?'0':'')+n}
-function today(){var n=new Date();return n.getFullYear()+'-'+p2(n.getMonth()+1)+'-'+p2(n.getDate())}
-function nowT(){var n=new Date();return p2(n.getHours())+':'+p2(n.getMinutes())}
-function fd(s){var a=String(s).split('-');return a.length==3?a[2]+'/'+a[1]+'/'+a[0]:s}
-function ft(s){var a=String(s).split(':'),h=+a[0],m=a[1]||'00';return(h%12||12)+':'+m+' '+(h>=12?'PM':'AM')}
-function tab(n){for(var i=1;i<=3;i++){$('p'+i).className=i==n?'':'hide';$('t'+i).className=i==n?'on':''}
-if(n==2){$('vd').className='card hide';list()}if(n==3)info()}
-function phone(m){var d=String(m).replace(/\D/g,'');if(d.indexOf('00')==0)d=d.slice(2);
-if(d.indexOf(CC)==0)return d;if(d.charAt(0)=='0')d=d.slice(1);return CC+d}
-function bpS(s,d){if(!s||!d)return'';return(s>=140||d>=90)?'High':(s<90||d<60)?'Low':(s>=130||d>=85)?'Elevated':'Normal'}
-function hrS(h){if(!h)return'';return h<60?'Low':h>100?'High':'Normal'}
-function suS(v,t){if(!v)return'';if(v<70)return'Low';if(t=='Fasting')return v<100?'Normal':v<126?'Elevated':'High';
-return v<140?'Normal':v<200?'Elevated':'High'}
-function tg(s){return s?' <span class="tag '+s+'">'+s+'</span>':''}
-function newId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
-
-function save(){
-var r={id:newId(),date:$('d').value||today(),time:$('tm').value||nowT(),name:$('nm').value.trim(),
-mobile:phone($('mb').value),sys:+$('sy').value||'',dia:+$('di').value||'',hr:+$('hr').value||'',
-sugar:+$('su').value||'',stype:$('st').value,note:$('nt').value.trim(),synced:0};
-if(!r.name)return toast('Enter visitor name');
-if(r.mobile.length<11)return toast('Enter valid mobile number');
-if(!(r.sys&&r.dia)&&!r.hr&&!r.sugar)return toast('Enter at least one reading');
-if((r.sys&&!r.dia)||(!r.sys&&r.dia))return toast('Enter both BP values');
-recs.push(r);store();
-var w=$('wa').checked;
-$('nm').value=$('mb').value=$('sy').value=$('di').value=$('hr').value=$('su').value=$('nt').value='';
-$('d').value=today();$('tm').value=nowT();
-toast('Record saved');
-sync(r);
-if(w)window.open(waLink(r.mobile,msg([r])),'_blank');
-}
-function line(r){var o=fd(r.date)+' '+ft(r.time);
-if(r.sys)o+='\nBP: '+r.sys+'/'+r.dia+' mmHg ('+bpS(r.sys,r.dia)+')';
-if(r.hr)o+='\nHeartbeat: '+r.hr+' bpm ('+hrS(r.hr)+')';
-if(r.sugar)o+='\nSugar: '+r.sugar+' mg/dL, '+r.stype+' ('+suS(r.sugar,r.stype)+')';
-if(r.note)o+='\nNote: '+r.note;return o}
-function msg(a){var o='*Life Pharmacy - Vital Record*\nName: '+a[0].name+'\n\n';
-o+=a.map(line).join('\n\n');
-return o+'\n\n_Screening reading only, not a diagnosis. Please consult your doctor._'}
-function waLink(m,t){return'https://wa.me/'+m+'?text='+encodeURIComponent(t)}
-
-function sync(r){var u=localStorage.getItem(U);if(!u||!navigator.onLine)return Promise.resolve(false);
-return fetch(u,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(r)})
-.then(function(){r.synced=1;store();return true}).catch(function(){return false})}
-function syncAll(){if(!localStorage.getItem(U))return toast('Save Sheet URL first');
-var p=recs.filter(function(r){return!r.synced});if(!p.length)return toast('Nothing pending');
-Promise.all(p.map(sync)).then(function(){info();toast('Sync finished')})}
-function restore(){var u=localStorage.getItem(U);if(!u)return toast('Save Sheet URL first');
-toast('Restoring...');fetch(u).then(function(x){return x.json()}).then(function(a){
-var ids={};recs.forEach(function(r){ids[r.id]=1});var n=0;
-a.forEach(function(r){if(r.id&&!ids[r.id]){r.synced=1;recs.push(r);n++}});store();info();toast(n+' records restored')})
-.catch(function(){toast('Restore failed. Check URL and deployment access')})}
-function saveUrl(){var v=$('url').value.trim();
-if(v&&v.indexOf('https://script.google.com/')!=0)return toast('URL must start with https://script.google.com/');
-localStorage.setItem(U,v);toast('Saved');info()}
-function info(){$('url').value=localStorage.getItem(U)||'';
-$('info').textContent='Total records: '+recs.length+' | Pending sync: '+recs.filter(function(r){return!r.synced}).length}
-
-function list(){
-var q=$('q').value.toLowerCase().trim(),a=$('f1').value,b=$('f2').value,g={};
-recs.forEach(function(r){
-if(a&&r.date<a)return;if(b&&r.date>b)return;
-if(q&&(r.name.toLowerCase().indexOf(q)<0&&r.mobile.indexOf(q.replace(/\D/g,'')||'#')<0))return;
-(g[r.mobile]=g[r.mobile]||[]).push(r)});
-var k=Object.keys(g).sort(function(x,y){return last(g[y]).localeCompare(last(g[x]))});
-$('vl').innerHTML=k.length?k.map(function(m){var v=g[m],l=v[v.length-1];
-return'<div class="v" onclick="detail(\''+m+'\')"><b>'+esc(l.name)+'</b> <small>+'+esc(m)+'</small><br><small>'+v.length+' visit(s) | Last: '+fd(l.date)+' '+ft(l.time)+'</small></div>'}).join(''):'<p>No visitors found.</p>'}
-function last(v){return v.reduce(function(x,r){var s=r.date+r.time;return s>x?s:x},'')}
-
-var cur=[];
-function detail(m){
-var a=$('f1').value,b=$('f2').value;
-cur=recs.filter(function(r){return r.mobile==m&&(!a||r.date>=a)&&(!b||r.date<=b)})
-.sort(function(x,y){return(x.date+x.time).localeCompare(y.date+y.time)});
-if(!cur.length)return;
-var h=tbl();
-$('vd').innerHTML='<h3 style="margin:0 0 8px">'+esc(cur[0].name)+' (+'+esc(m)+')</h3>'+h+
-'<button class="b g small" onclick="sendAll()">WhatsApp Report</button>'+
-'<button class="b s small" onclick="printR()">Print / PDF</button>'+
-'<button class="b o small" onclick="$(\'vd\').className=\'card hide\';$(\'vl\').parentNode.className=\'card\'">Back</button>';
-$('vl').parentNode.className='card hide';$('vd').className='card'}
-function tbl(){return'<div style="overflow-x:auto"><table><tr><th>Date/Time</th><th>BP</th><th>HR</th><th>Sugar</th><th></th></tr>'+
-cur.map(function(r){return'<tr><td>'+fd(r.date)+'<br>'+ft(r.time)+'</td><td>'+(r.sys?r.sys+'/'+r.dia+tg(bpS(r.sys,r.dia)):'-')+'</td><td>'+(r.hr?r.hr+tg(hrS(r.hr)):'-')+
-'</td><td>'+(r.sugar?r.sugar+'<br><small>'+esc(r.stype)+'</small>'+tg(suS(r.sugar,r.stype)):'-')+'</td><td><button class="b r small" onclick="del(\''+r.id+'\')">X</button></td></tr>'+
-(r.note?'<tr><td colspan="5"><small>Note: '+esc(r.note)+'</small></td></tr>':'')}).join('')+'</table></div>'}
-function sendAll(){window.open(waLink(cur[0].mobile,msg(cur)),'_blank')}
-function printR(){
-$('pr').innerHTML='<h2 style="text-align:center">Life Pharmacy Vital Record</h2><p><b>Name:</b> '+esc(cur[0].name)+' &nbsp; <b>Mobile:</b> +'+esc(cur[0].mobile)+
-'</p>'+tbl().replace(/<th><\/th>/,'').replace(/<td><button.*?<\/button><\/td>/g,'')+
-'<p style="font-size:11px">Screening readings only, not a diagnosis. Printed '+fd(today())+'. Developed by Haseeb Mirza +971507256801. All rights reserved.</p>';
-window.print()}
-function del(id){if(!confirm('Delete this record from this device? (Google Sheet copy stays)'))return;
-var m=cur[0].mobile;recs=recs.filter(function(r){return r.id!=id});store();
-recs.some(function(r){return r.mobile==m})?detail(m):($('vd').className='card hide',$('vl').parentNode.className='card',list())}
-function csv(){var h='ID,Date,Time,Name,Mobile,Sys,Dia,HeartRate,Sugar,SugarType,Note\n';
-var c=function(v){return'"'+String(v==null?'':v).replace(/"/g,'""')+'"'};
-var t=h+recs.map(function(r){return[r.id,fd(r.date),r.time,r.name,r.mobile,r.sys,r.dia,r.hr,r.sugar,r.stype,r.note].map(c).join(',')}).join('\n');
-var a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+t],{type:'text/csv'}));
-a.download='vital_records_'+today()+'.csv';document.body.appendChild(a);a.click();a.remove()}
-
-var V='lpvr_view';
-function setView(d){document.body.className=d?'desk':'';$('vt').textContent=d?'Switch to Mobile view':'Switch to Desktop view';try{localStorage.setItem(V,d?'d':'m')}catch(e){}}
-function toggleView(){setView(document.body.className!='desk')}
-(function(){var v=null;try{v=localStorage.getItem(V)}catch(e){}setView(v?v=='d':window.innerWidth>=900)})();
-$('d').value=today();$('tm').value=nowT();
-if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
-window.addEventListener('online',function(){recs.filter(function(r){return!r.synced}).forEach(sync)});
-</script>
+<script src="app.js"></script>
 </body>
 </html>
