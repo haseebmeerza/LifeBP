@@ -1,6 +1,6 @@
 {
-  "sheetUrl": "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE",
-  "token": "CHANGE_THIS_SECRET",
-  "versionCode": 2,
-  "versionName": "1.1.0"
+  "sheetUrl": "https://script.google.com/macros/s/AKfycbxWKBQ1PEPpUbZ9E0evLXh3fQLB-ryrV9GpLCywXcCOYfU_rHlBA1NvBTusYVDXZg9Peg/exec",
+  "token": "haseeb",
+  "versionCode": 3,
+  "versionName": "1.1.1"
 }
